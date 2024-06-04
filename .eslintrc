@@ -1,0 +1,12 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+  },
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "airbnb-typescript",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "prettier"
+  ],
+}
