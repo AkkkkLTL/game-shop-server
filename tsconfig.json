@@ -1,4 +1,5 @@
 {
+  "compileOnSave": false,
   "compilerOptions": {
     "target": "ES6",
     "outDir": "dist",
@@ -8,12 +9,17 @@
     "experimentalDecorators": true,
     "allowJs": true,
     "strict": true,
-    "noImplicitAny": true,
+    "types": ["node", "jest"],
     "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "commonjs",
+    "pretty": true,
     "sourceMap": true,
     "declaration": true,
+    "noEmit": false,
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "importHelpers": true,
     "baseUrl": "src",
     "paths": {
       "@/*": ["*"],
@@ -26,9 +32,9 @@
       "@models/*": ["models/*"],
       "@routes/*": ["routes/*"],
       "@services/*": ["services/*"],
-      "@utils/*": ["utils/*"],
+      "@utils/*": ["utils/*"]
     }
   },
-  "include": ["src/**/*.ts","env"],
-  "exclude": ["node_modules"],
+  "include": ["src/**/*.ts","src/**/*.json",".env"],
+  "exclude": ["node_modules"]
 }

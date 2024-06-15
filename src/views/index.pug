@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h1 hello world!
+  if user
+    h1 WELCOME BACK #{user.username}
+    a(href="/log-out") LOG OUT
+  else 
+    a(href="/log-in") LOG IN
