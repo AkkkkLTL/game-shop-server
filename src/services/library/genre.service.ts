@@ -1,7 +1,10 @@
 import { HttpException } from "@/exceptions/HttpExceptions";
 import { IGenre } from "@interfaces/library/genres.interface";
 import { GenreModel } from "@models/library/genre.model";
+import { Random } from "mockjs";
+import { Service } from "typedi";
 
+@Service()
 export class GenreService {
   public async findAllGenre():Promise<IGenre[]> {
     const genres:IGenre[] = await GenreModel.find();
@@ -14,6 +17,11 @@ export class GenreService {
     if (!findGenre) throw new HttpException(404, "Genre not Found");
 
     return findGenre;
+  }
+
+  public async countAllGenre():Promise<number> {
+    const numGenre = await GenreModel.countDocuments();
+    return numGenre;
   }
 
   public async createGenre(genreData:IGenre):Promise<IGenre> {

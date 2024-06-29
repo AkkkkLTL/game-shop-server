@@ -6,11 +6,11 @@ const BookSchema: Schema<IBook> = new Schema({
     type: String, 
     required: true
   },
-  author: {
+  author: [{
     type: Schema.Types.ObjectId, 
     ref: "Author", 
     required: true
-  },
+  }],
   isbn: {
     type: String, 
     required: true
@@ -25,6 +25,9 @@ const BookSchema: Schema<IBook> = new Schema({
   },
   imprint: {
     type: String, 
+  },
+  cover: {
+    type: String,
   },
   status: {
     type: String,

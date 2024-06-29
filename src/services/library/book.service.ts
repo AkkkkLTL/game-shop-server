@@ -4,19 +4,21 @@ import { IBook } from "@interfaces/library/books.interface";
 import { BookModel } from "@models/library/book.model";
 import { HttpException } from "@exceptions/HttpExceptions";
 import { PipelineStage } from "mongoose";
+import { Random, mock } from "mockjs";
 
 @Service()
 export class BookService {
   public async findAllBook():Promise<IBook[]> {
-    const books:IBook[] = await BookModel.find({}, "title author")
-      .sort({title:1})
-      .populate("author");
-    
+    const books:IBook[] = await BookModel.find({}, "title author cover")
+     .sort({title:1})
+     .populate("author");
+        
     return books;
   }
 
   public async findBookById(bookId:string):Promise<IBook> {
-    const findBook = await BookModel.findById(bookId);
+    const findBook = await BookModel.findById(bookId)
+      .populate("author");
     if (!findBook)
       throw new HttpException(404, "Book Not Found");
 
@@ -67,7 +69,9 @@ export class BookService {
         throw new HttpException(409, `The Book ${bookData.isbn} already exists`)
     }
 
-    const updateBookById:IBook|null = await BookModel.findByIdAndUpdate(bookId, { bookData });
+    console.log(`updateBook: ${JSON.stringify(bookData)}`);
+
+    const updateBookById:IBook|null = await BookModel.findByIdAndUpdate(bookId, bookData, {new: true});
     if (!updateBookById)
       throw new HttpException(404, "Book doesn't exist");
 

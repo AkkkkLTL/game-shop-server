@@ -6,6 +6,7 @@ import { IAuthor } from "@interfaces/library/authors.interface";
 import { BookModel } from "@models/library/book.model";
 import { IBook } from "@interfaces/library/books.interface";
 import { HttpException } from "@exceptions/HttpExceptions";
+import { Random } from "mockjs";
 
 @Service()
 export class AuthorService {
@@ -36,6 +37,11 @@ export class AuthorService {
     return findAuthor;
   }
 
+  public async countAllAuthor():Promise<number> {
+    const numAuthor = await AuthorModel.countDocuments();
+    return numAuthor;
+  }
+
   /**
    * create Author, can duplicate
    * 
@@ -56,7 +62,7 @@ export class AuthorService {
    * @returns updated specified author
    */
   public async updateAuthor(authorId:string, authorData:IAuthor):Promise<IAuthor> {
-    const updateAuthorById = await AuthorModel.findByIdAndUpdate(authorId, {authorData});
+    const updateAuthorById = await AuthorModel.findByIdAndUpdate(authorId, authorData, {new:true});
     if (!updateAuthorById) throw new HttpException(404, "Author doesn't exist");
 
     return updateAuthorById;

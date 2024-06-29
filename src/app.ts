@@ -6,6 +6,7 @@ import { Strategy } from "passport-local";
 import { join } from "path";
 import { compare } from "bcryptjs";
 import { middleware as cache } from "apicache";
+import cors  from "cors";
 
 import { NODE_ENV, PORT } from "@config";
 import { Routes } from "@interfaces/routes.interface";
@@ -56,7 +57,8 @@ export class App {
 
   private initializeMiddlewares() {
 
-    this.app.use(cache('5 minutes'));
+    this.app.use(cors());
+    //this.app.use(cache('5 minutes'));
     this.app.use(express.urlencoded({
       extended: false
     }));

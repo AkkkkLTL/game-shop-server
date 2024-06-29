@@ -1,5 +1,7 @@
 import { IBook } from "@/interfaces/library/books.interface";
+import { AuthorService } from "@/services/library/author.service";
 import { BookService } from "@/services/library/book.service";
+import { GenreService } from "@/services/library/genre.service";
 import debug from "debug";
 import { Request, Response } from "express";
 import { validationResult } from "express-validator";
@@ -8,6 +10,8 @@ import Container from "typedi";
 export class BookController {
   private _debug = debug("book");
   private book = Container.get(BookService);
+  private author = Container.get(AuthorService);
+  private genre = Container.get(GenreService);
 
   public getBooks = async (req:Request, res:Response) => {
     const findAllBooksData:IBook[] = await this.book.findAllBook();
@@ -29,10 +33,16 @@ export class BookController {
   }
 
   public getBookOverview = async (req:Request, res:Response) => {
-    const bookStatusData = await this.book.countBookGroupBy("status");
+    const sumBook = await this.book.countAllBook();
+    const sumAuthor = await this.author.countAllAuthor();
+    const sumGenre = await this.genre.countAllGenre();
 
     res.status(200).json({
-      data: bookStatusData,
+      data: {
+        sumBook: sumBook,
+        sumAuthor: sumAuthor,
+        sumGenre: sumGenre,
+      },
       message: "Over View Data",
     });
   }
