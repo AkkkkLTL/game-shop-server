@@ -14,7 +14,8 @@ export class BookController {
   private genre = Container.get(GenreService);
 
   public getBooks = async (req:Request, res:Response) => {
-    const findAllBooksData:IBook[] = await this.book.findAllBook();
+    const params = req.query;
+    const findAllBooksData:IBook[] = await this.book.findAllBook(params);
 
     res.status(200).json({
       data: findAllBooksData,
@@ -33,16 +34,10 @@ export class BookController {
   }
 
   public getBookOverview = async (req:Request, res:Response) => {
-    const sumBook = await this.book.countAllBook();
-    const sumAuthor = await this.author.countAllAuthor();
-    const sumGenre = await this.genre.countAllGenre();
+    const statusBook = await this.book.countBookGroupBy("status");
 
     res.status(200).json({
-      data: {
-        sumBook: sumBook,
-        sumAuthor: sumAuthor,
-        sumGenre: sumGenre,
-      },
+      data: statusBook,
       message: "Over View Data",
     });
   }

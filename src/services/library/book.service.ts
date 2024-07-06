@@ -8,8 +8,8 @@ import { Random, mock } from "mockjs";
 
 @Service()
 export class BookService {
-  public async findAllBook():Promise<IBook[]> {
-    const books:IBook[] = await BookModel.find({}, "title author cover")
+  public async findAllBook(query:Object = {}):Promise<IBook[]> {
+    const books:IBook[] = await BookModel.find(query, "title author cover status pages currentPages")
      .sort({title:1})
      .populate("author");
         
@@ -30,11 +30,6 @@ export class BookService {
     return findBooks;
   }
 
-  public async findBookByStatus(bookStatus:string):Promise<IBook[]> {
-    const findBooks:IBook[] = await BookModel.find({status: bookStatus});
-    return findBooks;
-  }
-
   public async countAllBook():Promise<number> {
     const numbooks:number = await BookModel.countDocuments();
     return numbooks;
@@ -45,7 +40,7 @@ export class BookService {
       {
         $group: {
           _id: `$${bookGroup}`,
-          num_books: {$sum:1},
+          number: {$sum:1},
         }
       }
     ];

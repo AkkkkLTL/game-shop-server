@@ -9,4 +9,6 @@ export interface IBook extends Document{
   summary: string,
   imprint: string,
   status:string,
+  pages: number,
+  currentPages:number,
 }

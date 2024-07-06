@@ -29,6 +29,12 @@ const BookSchema: Schema<IBook> = new Schema({
   cover: {
     type: String,
   },
+  pages: {
+    type: Number,
+  },
+  currentPages: {
+    type: Number,
+  },
   status: {
     type: String,
     required: true,
