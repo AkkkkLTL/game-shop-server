@@ -8,7 +8,17 @@ import { Random, mock } from "mockjs";
 
 @Service()
 export class BookService {
-  public async findAllBook(query:Object = {}):Promise<IBook[]> {
+  public async findAllBook(query:Object = {}, page?:string, pageSize?:string):Promise<IBook[]> {
+    const listPage = Number(page);
+    const listPageSize = Number(pageSize);
+    if (listPage && listPageSize) {
+      const skip = (listPage - 1) * listPageSize;
+      return await BookModel.find(query, "title author cover status pages currentPages")
+        .sort({title: 1})
+        .skip(skip)
+        .limit(listPageSize)
+        .populate("author");
+    }
     const books:IBook[] = await BookModel.find(query, "title author cover status pages currentPages")
      .sort({title:1})
      .populate("author");

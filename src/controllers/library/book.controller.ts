@@ -14,8 +14,8 @@ export class BookController {
   private genre = Container.get(GenreService);
 
   public getBooks = async (req:Request, res:Response) => {
-    const params = req.query;
-    const findAllBooksData:IBook[] = await this.book.findAllBook(params);
+    const {page, pageSize, ...params} = req.query as {page?:string,pageSize?:string,status:string};
+    const findAllBooksData:IBook[] = await this.book.findAllBook(params,page,pageSize);
 
     res.status(200).json({
       data: findAllBooksData,
