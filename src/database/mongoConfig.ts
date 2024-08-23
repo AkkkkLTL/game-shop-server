@@ -13,7 +13,7 @@ export const mongoConnection = async () => {
   set("strictQuery", false);
   const dbConfig:string = process.env.MONGODB_URI || '';
   try {
-    await connect(dbConfig);
+    await connect(dbConfig).then(() => console.log("MongoDB connect success"));
   } catch(err) {
     console.log(`mongo connection error: ${err}`);
   }
