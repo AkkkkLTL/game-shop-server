@@ -16,9 +16,13 @@ export class BookController {
   public getBooks = async (req:Request, res:Response) => {
     const {page, pageSize, ...params} = req.query as {page?:string,pageSize?:string,status:string};
     const findAllBooksData:IBook[] = await this.book.findAllBook(params,page,pageSize);
+    const total:number = await this.book.countAllBook(params);
 
     res.status(200).json({
-      data: findAllBooksData,
+      data: {
+        booklist: findAllBooksData,
+        total: total
+      },
       message: "findAll",
     });
   }

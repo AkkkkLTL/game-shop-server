@@ -40,8 +40,8 @@ export class BookService {
     return findBooks;
   }
 
-  public async countAllBook():Promise<number> {
-    const numbooks:number = await BookModel.countDocuments();
+  public async countAllBook(params:any):Promise<number> {
+    const numbooks:number = await BookModel.countDocuments(params);
     return numbooks;
   }
 
